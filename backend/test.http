@@ -1,0 +1,35 @@
+﻿POST http://127.0.0.1:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "monSuperMotDePasse123!",
+  "pseudo": "TesteurFou",
+  "city": "Paris"
+}
+
+### Test de Connexion
+POST http://127.0.0.1:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "monSuperMotDePasse123!"
+}
+
+### Créer une annonce (Nécessite d'être connecté)
+POST http://127.0.0.1:3000/api/ads
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3NzU2Mzc0OTgsImV4cCI6MTc3NTcyMzg5OH0.cuyfldHmuF1KWPRI-kR6XGOwLMMi90eRNE3IfwzaqzU
+
+{
+  "type": "OFFER",
+  "title": "Cours de guitare débutant",
+  "description": "Je vous apprends les bases de la guitare acoustique, accords et rythmiques.",
+  "category": "COURS",
+  "city": "Paris",
+  "availability": "Dispo le week-end",
+  "priceType": "HOURLY",
+  "priceValue": 20,
+  "modality": "AT_CUSTOMER"
+}
