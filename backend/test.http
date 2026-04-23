@@ -20,7 +20,7 @@ Content-Type: application/json
 ### Créer une annonce (Nécessite d'être connecté)
 POST http://127.0.0.1:3000/api/ads
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3NzU2Mzc0OTgsImV4cCI6MTc3NTcyMzg5OH0.cuyfldHmuF1KWPRI-kR6XGOwLMMi90eRNE3IfwzaqzU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3NzY5MzcyNDQsImV4cCI6MTc3NzAyMzY0NH0.PC5ld2ZeE6Tn4DonErjz4SIizE8ZnFq4m0iR28wiNnw
 
 {
   "type": "OFFER",
@@ -33,3 +33,43 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZ
   "priceValue": 20,
   "modality": "AT_CUSTOMER"
 }
+
+### Récupérer toutes les annonces
+GET http://127.0.0.1:3000/api/ads
+
+### Récupérer une annonce par son ID
+GET http://127.0.0.1:3000/api/ads/cfca29bb-3700-4be1-a08d-ddeb530395af
+
+### --- TESTS DE MISE À JOUR (UPDATE) ---
+
+### Modifier mon annonce (Succès attendu)
+PUT http://127.0.0.1:3000/api/ads/cfca29bb-3700-4be1-a08d-ddeb530395af
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3NzY5MzcyNDQsImV4cCI6MTc3NzAyMzY0NH0.PC5ld2ZeE6Tn4DonErjz4SIizE8ZnFq4m0iR28wiNnw
+
+{
+  "title": "Cours de guitare ÉLECTRIQUE",
+  "priceValue": 25,
+  "status": "PUBLISHED"
+}
+
+### Modifier l'annonce de quelqu'un d'autre (Échec attendu : 403 Forbidden)
+PUT http://127.0.0.1:3000/api/ads/cfca29bb-3700-4be1-a08d-ddeb530395af
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3NzY5MzcyNDQsImV4cCI6MTc3NzAyMzY0NH0.PC5ld2ZeE6Tn4DonErjz4SIizE8ZnFq4m0iR28wiNnw
+
+{
+  "title": "Hacked !"
+}
+
+
+### --- TESTS DE SUPPRESSION (DELETE) ---
+
+### Supprimer l'annonce d'autrui (Échec attendu : 403 Forbidden)
+DELETE http://127.0.0.1:3000/api/ads/cfca29bb-3700-4be1-a08d-ddeb530395af
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3NzY5MzcyNDQsImV4cCI6MTc3NzAyMzY0NH0.PC5ld2ZeE6Tn4DonErjz4SIizE8ZnFq4m0iR28wiNnw
+
+
+### Supprimer ma propre annonce (Succès attendu : 200 OK)
+DELETE http://127.0.0.1:3000/api/ads/cfca29bb-3700-4be1-a08d-ddeb530395af
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3NzY5MzcyNDQsImV4cCI6MTc3NzAyMzY0NH0.PC5ld2ZeE6Tn4DonErjz4SIizE8ZnFq4m0iR28wiNnw
