@@ -39,27 +39,41 @@ exports.createAd = async (req, res) => {
 
 exports.getAllAds = async (req, res) => {
     try {
-        // On demande à Prisma de trouver toutes les annonces
+        // On récupère les filtres depuis les query params : /api/ads?city=Paris&type=OFFER
+        const { type, category, city, search, sortBy, order } = req.query;
+
+        // On construit l'objet de filtrage dynamiquement
+        let filters = {
+            status: 'PUBLISHED', // Par défaut, on ne montre que ce qui est publié
+        };
+
+        if (type) filters.type = type;
+        if (category) filters.category = category;
+        if (city) filters.city = { contains: city, mode: 'insensitive' }; // Recherche floue
+
+        // Recherche par mot-clé dans le titre OU la description
+        if (search) {
+            filters.OR = [
+                { title: { contains: search, mode: 'insensitive' } },
+                { description: { contains: search, mode: 'insensitive' } },
+            ];
+        }
+
         const ads = await prisma.ad.findMany({
+            where: filters,
             orderBy: {
-                createdAt: 'desc' // On trie pour avoir les plus récentes en premier
+                // Tri dynamique : soit par prix, soit par date (défaut)
+                [sortBy || 'createdAt']: order || 'desc'
             },
-            // L'astuce magique : on inclut des infos de l'auteur (grâce à ta relation Prisma)
             include: {
-                author: {
-                    select: {
-                        pseudo: true,
-                        city: true
-                    }
-                }
+                author: { select: { pseudo: true, city: true } }
             }
         });
 
         res.status(200).json(ads);
-
     } catch (error) {
-        console.error("Erreur lors de la récupération des annonces :", error);
-        res.status(500).json({ error: "Erreur interne du serveur." });
+        console.error(error);
+        res.status(500).json({ error: "Erreur lors de la récupération filtrée" });
     }
 };
 
