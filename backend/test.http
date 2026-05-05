@@ -141,3 +141,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZ
 ### Récupérer les détails d'une conversation spécifique (historique)
 GET http://127.0.0.1:3000/api/messages/7a119bfb-634c-419c-8a61-1305ae7868fa
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3Nzc5Njc4NDAsImV4cCI6MTc3ODA1NDI0MH0.5yKlnF00fj9TNWGjEOWqeKu9peIo9EUAtWGIGrRK8Yc
+
+### --- TESTS DES FAVORIS ---
+
+### Ajouter ou retirer une annonce des favoris
+POST http://127.0.0.1:3000/api/favorites/9c371626-0abd-4617-973b-702628cb58b0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3Nzc5Njc4NDAsImV4cCI6MTc3ODA1NDI0MH0.5yKlnF00fj9TNWGjEOWqeKu9peIo9EUAtWGIGrRK8Yc
+
+### Récupérer les annonces favorites de l'utilisateur
+GET http://127.0.0.1:3000/api/favorites
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3Nzc5Njc4NDAsImV4cCI6MTc3ODA1NDI0MH0.5yKlnF00fj9TNWGjEOWqeKu9peIo9EUAtWGIGrRK8Yc

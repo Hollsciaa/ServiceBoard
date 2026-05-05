@@ -3,6 +3,7 @@ const cors = require('cors');
 const adRoutes = require('./routes/adRoutes');
 const userRoutes = require('./routes/userRoutes');
 const messageRoutes = require('./routes/messageRoutes');
+const favoriteRoutes = require('./routes/favoriteRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use('/api/auth', authRoutes); // Toutes les routes d'auth commenceront par /
 app.use('/api/ads', adRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/favorites', favoriteRoutes);
 
 // Notre première route de test !
 app.get('/', (req, res) => {

@@ -5,7 +5,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-//  directUrl = env("DIRECT_URL")
+  //  directUrl = env("DIRECT_URL")
 }
 
 // -----------------------------------------------------------------------------
@@ -24,30 +24,33 @@ model User {
   // Relations
   ads          Ad[]           // Annonces créées par l'utilisateur
   messages     Message[]      // Messages envoyés
+  favorites    Favorite[]     // Favoris de l'utilisateur
+
   // Pour les conversations, un utilisateur peut être participant 1 ou 2
   convsAsP1    Conversation[] @relation("Participant1")
   convsAsP2    Conversation[] @relation("Participant2")
 }
 
 model Ad {
-  id           String   @id @default(uuid())
-  type         AdType   // OFFER ou REQUEST
+  id           String         @id @default(uuid())
+  type         AdType         // OFFER ou REQUEST
   title        String
-  description  String   @db.Text
-  category     String   // Ex: BRICOLAGE, INFORMATIQUE, MENAGE...
+  description  String         @db.Text
+  category     String         // Ex: BRICOLAGE, INFORMATIQUE, MENAGE...
   city         String
-  availability String   // Texte libre
-  priceType    PriceType// FREE, HOURLY, FIXED
-  priceValue   Float?   // Null si FREE
-  modality     Modality // REMOTE, AT_PROVIDER, AT_CUSTOMER
-  status       AdStatus @default(DRAFT)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  availability String         // Texte libre
+  priceType    PriceType      // FREE, HOURLY, FIXED
+  priceValue   Float?         // Null si FREE
+  modality     Modality       // REMOTE, AT_PROVIDER, AT_CUSTOMER
+  status       AdStatus       @default(DRAFT)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 
   // Relations
   authorId     String
-  author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author       User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
   conversations Conversation[]
+  favorites    Favorite[]     // Utilisateurs ayant mis cette annonce en favori
 }
 
 model Conversation {
@@ -105,4 +108,16 @@ enum Modality {
 enum AdStatus {
   DRAFT
   PUBLISHED
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  userId    String
+  adId      String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ad        Ad       @relation(fields: [adId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, adId]) // Empêche d'ajouter deux fois la même annonce en favori
 }
