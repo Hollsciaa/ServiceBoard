@@ -82,3 +82,21 @@ GET http://127.0.0.1:3000/api/ads?search=guitare&city=Paris
 
 ### Trier par prix croissant
 GET http://127.0.0.1:3000/api/ads?sortBy=priceValue&order=asc
+
+### --- TESTS DU PROFIL UTILISATEUR ---
+
+### Récupérer mon profil (Nécessite d'être connecté)
+GET http://127.0.0.1:3000/api/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3Nzc5Njc4NDAsImV4cCI6MTc3ODA1NDI0MH0.5yKlnF00fj9TNWGjEOWqeKu9peIo9EUAtWGIGrRK8Yc
+
+
+### Modifier les informations du profil
+PUT http://127.0.0.1:3000/api/users/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYjgzZTQxNi0wYzJkLTRjMTgtYjRlMS1mNDc0YTk0NDRjOGEiLCJpYXQiOjE3Nzc5Njc4NDAsImV4cCI6MTc3ODA1NDI0MH0.5yKlnF00fj9TNWGjEOWqeKu9peIo9EUAtWGIGrRK8Yc
+
+{
+  "pseudo": "SuperTesteur",
+  "city": "Lyon",
+  "bio": "Coucou, je propose mes services sur ServiceBoard !"
+}
